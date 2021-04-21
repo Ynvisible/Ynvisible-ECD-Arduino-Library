@@ -58,6 +58,7 @@ void YNV_ECD::refresh() //Refreshes the dipslay to maintain the current state.
   }
   delay(_ref_reduction_time); 
   highImpMode(); 
+  disableCounter();
 }
 
 
