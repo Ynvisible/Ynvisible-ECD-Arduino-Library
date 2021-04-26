@@ -25,8 +25,8 @@ class YNV_ECD
 		int _par_switching_time = 2200;
 		
 		//SEQ DRIVE VARIABLES
-		int _seq_reduction_time = 2200;
-		int _seq_oxidation_time = 2200;
+		int _seq_reduction_time = 1000;
+		int _seq_oxidation_time = 1000;
 		float _seq_reduction_voltage = 3.0;
 		float _seq_oxidation_voltage = -3.0;
 
