@@ -90,27 +90,8 @@ void YNV_ECD::setPar(bool next_state[]) //Function for updating the display in p
 
 void YNV_ECD::setSeq(bool next_state[]) //Function for updating the display in sequential mode.
 {
-  enableCounter(_supply_voltage - _seq_reduction_voltage);
-  int delay_required = 0;
-  for (int i = 0; i < _number_of_segments; i++)
-  {
-    if(next_state[i] != _current_state[i])
-    {
-      if(next_state[i] == 1){
-        pinMode(_segments[i], OUTPUT);
-        digitalWrite(_segments[i], next_state[i]);
-        _current_state[i] = next_state[i];
-        delay_required = 1;
-      }
-    }
-  }
-  if(delay_required == 1){
-    delay(_seq_reduction_time);
-  }
-
-  highImpMode();
   enableCounter(-_seq_oxidation_voltage);
-  delay_required = 0;
+  bool delay_required = false;
   for (int i = 0; i < _number_of_segments; i++)
   {
     if(next_state[i] != _current_state[i])
@@ -119,15 +100,34 @@ void YNV_ECD::setSeq(bool next_state[]) //Function for updating the display in s
         pinMode(_segments[i], OUTPUT);
         digitalWrite(_segments[i], next_state[i]);
         _current_state[i] = next_state[i];
-        delay_required = 1;
+        delay_required = true;
       }
     }
   }
-  if(delay_required == 1){
+  if(delay_required == true){
     delay(_seq_oxidation_time);
   }
-
   highImpMode();
+
+  enableCounter(_supply_voltage - _seq_reduction_voltage);
+  delay_required = false;
+  for (int i = 0; i < _number_of_segments; i++)
+  {
+    if(next_state[i] != _current_state[i])
+    {
+      if(next_state[i] == 1){
+        pinMode(_segments[i], OUTPUT);
+        digitalWrite(_segments[i], next_state[i]);
+        _current_state[i] = next_state[i];
+        delay_required = true;
+      }
+    }
+  }
+  if(delay_required == true){
+    delay(_seq_reduction_time);
+  }
+  highImpMode();
+  
   disableCounter();
 }
 
