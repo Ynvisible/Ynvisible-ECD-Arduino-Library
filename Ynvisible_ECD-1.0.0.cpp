@@ -45,7 +45,7 @@ void YNV_ECD::set(bool next_state[]){
 
 }
 
-void YNV_ECD::refresh() //Refreshes the dipslay to maintain the current state.
+void YNV_ECD::refresh() //Refreshes the display to maintain the current state.
 {
   enableCounter(_supply_voltage - _ref_reduction_voltage);
   for (int i = 0; i < _number_of_segments; i++)
